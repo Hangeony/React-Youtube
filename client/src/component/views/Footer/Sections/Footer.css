@@ -1,0 +1,138 @@
+.footer {
+  padding-bottom: calc(env(safe-area-inset-bottom));
+  border-top: 1px solid #e9ecef;
+  background-color: #fff;
+}
+.grid-container {
+  position: relative;
+  width: 100%;
+}
+.grid-row .footer-custom {
+  box-sizing: border-box;
+}
+.grid-row {
+  margin: 0 auto;
+  position: relative;
+  width: 1060px;
+}
+.footer .mrtFooter {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 40px 0;
+  text-align: center;
+  width: 100%;
+  position: relative;
+}
+.footer .mrtFooter .footer-container1 {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.customer {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 50%;
+  text-align: left;
+  color: #666d75;
+  padding-bottom: 32px;
+}
+.customer .customer-subject {
+  margin: 0;
+  line-height: 1.33;
+  font-size: 18px;
+  font-weight: 700;
+}
+.customer .customer-question {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: #848c94;
+  line-height: 1.5;
+  letter-spacing: -0.2px;
+  word-break: break-all;
+}
+.customer .customer-question .customer-word {
+  color: #495056;
+}
+.customer .chat-btn {
+  width: 110px;
+  margin: 16px 0 0;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  padding: 9px 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #495056;
+  background-color: #fff;
+  line-height: 20px;
+  transition: box-shadow 0.2s ease;
+}
+.footer .mrtFooter .footer-container2 {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  border-top: 1px solid #e9ecef;
+  padding: 16px 0 0;
+}
+.policy {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  width: 50%;
+}
+.policy .policy-item {
+  margin-right: 20px;
+}
+.policy .policy-item .policy-item2 {
+  font-size: 14px;
+  line-height: 2.29;
+  color: #666d75;
+  transition: color 0.2s ease;
+}
+.Button-module {
+  height: auto;
+  padding: 6px;
+  font-size: 14px;
+  border: 0;
+  padding: 0;
+  position: relative;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0);
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 0.1s ease-out, background-color 0.1s ease-out,
+    color 0.1s ease-out, border-bottom 0.1s ease-out;
+}
+.policy-item2 {
+  display: inline-block;
+  line-height: 1;
+  box-sizing: border-box;
+}
+/*
+      * reset.css 넣어야 될 부분 
+      */
+.footer .mrtFooter .footer-container2 .footer-copyright {
+  color: #848c94;
+  font-size: 12px;
+  letter-spacing: -0.2px;
+  line-height: 1.67;
+  text-align: left;
+  margin: 16px 0 0;
+}
