@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const videoSchema = mongoose.Schema(
   {
+    //UserTable에 모든 유저정보를 가져옴
     writer: {
-      //UserTable에 모든 유저정보를 가져옴
       type: Schema.Types.ObjectId,
       ref: "User",
     },

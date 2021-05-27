@@ -54,7 +54,6 @@ router.post("/thumbnail", (req, res) => {
     fileDuration = metadata.format.duration;
   });
 
-  console.log(req.body)
   //썸내일생성
   ffmpeg(req.body.url)
     //video 파일을 생성
@@ -68,9 +67,9 @@ router.post("/thumbnail", (req, res) => {
       console.log("Screenshots taken");
       return res.status(200).json({
         success: true,
-        url : filePath,
-        fileName : fileName,
-        fileDuration : fileDuration
+        url: filePath,
+        fileName: fileName,
+        fileDuration: fileDuration,
       });
     })
     .on("error", function (err) {
@@ -93,11 +92,23 @@ router.post("/uploadVideo", (req, res) => {
   //client 에서 보낸 variables에서 보낸 정보를  req.body에 저장시킴.
   const video = new Video(req.body);
 
-
   video.save((err, doc) => {
     if (err) return res.status(401).json({ success: false, err });
     res.status(200).json({ success: true });
   });
+});
+
+//비디오정보 가져오기
+router.get("/getVideos", (req, res) => {
+  //비디오를 DB에서 가져와서 client에 보낸다.
+  //DB에저장된 video를 찾는일
+  //populate을 해둬야 모든 user정보를 가져옴
+  Video.find()
+    .populate("writer")
+    .exec((err, videos) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videos });
+    });
 });
 
 module.exports = router;

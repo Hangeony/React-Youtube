@@ -54,7 +54,7 @@ userSchema.pre("save", function (next) {
 userSchema.methods.comparePassword = function (painPassword, cb) {
   // console.log("p::", painPassword, this.password);
   bcrypt.compare(painPassword, this.password, function (err, isMatch) {
-    console.log("result", err, isMatch);
+    // console.log("result", err, isMatch);
     if (err) return cb(err);
     return cb(null, isMatch);
   });
@@ -68,7 +68,7 @@ userSchema.methods.generateToken = function (cb) {
   //위에 모델에 있는 token에 값을 넣음.
   user.token = token;
   user.save(function (err, user) {
-    console.log(err);
+    // console.log(err);
     if (err) return cb(err);
     cb(null, user);
   });
