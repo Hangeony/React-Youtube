@@ -1,18 +1,21 @@
 const express = require("express");
 const multer = require("multer");
 const router = express.Router();
+const path = require("path");
 const { Video } = require("../models/Video");
 const ffmpeg = require("fluent-ffmpeg");
+const { auth } = require("../middleware/auth");
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
   }, //에디에 저장할지 설명, 파일을 업로드하면 uploads파일에 담김
-  fileName: (req, file, cb) => {
+  filename: (req, file, cb) => {
     cb(null, `${Date.now()}_${file.originalname}`);
   }, //올린날짜_파일이름
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname);
+    console.log("ext", ext);
     if (ext !== ".mp4") {
       //파일 .mp4만 파일 업로드 할 수 있게함.
       //if(ext !== '.mp4' || ext !== '.png') 이렇게 파일을 추가 할 수 있다.
@@ -40,7 +43,7 @@ router.post("/uploadfiles", (req, res) => {
   });
 });
 
-router.post("/thumbnail", (req, res) => {
+router.post("/thumbnail", auth, (req, res) => {
   //썸내일 생성하고 비디오 러닝타임도 가져오기
 
   let filePath = "";
@@ -49,8 +52,8 @@ router.post("/thumbnail", (req, res) => {
 
   //비디오 정보 가져오기
   ffmpeg.ffprobe(req.body.url, function (err, metadata) {
-    console.dir(metadata);
-    console.log(metadata.format.duration);
+    // console.dir(metadata);
+    // console.log(metadata.format.duration);
     fileDuration = metadata.format.duration;
   });
 
@@ -87,10 +90,11 @@ router.post("/thumbnail", (req, res) => {
 });
 
 //비디오 저장
-router.post("/uploadVideo", (req, res) => {
+router.post("/uploadVideo", auth, (req, res) => {
   //비디오 정보들을 저장한다.
   //client 에서 보낸 variables에서 보낸 정보를  req.body에 저장시킴.
-  const video = new Video(req.body);
+  const data = { ...req.body, writer: req.user._id };
+  const video = new Video(data);
 
   video.save((err, doc) => {
     if (err) return res.status(401).json({ success: false, err });
@@ -108,6 +112,17 @@ router.get("/getVideos", (req, res) => {
     .exec((err, videos) => {
       if (err) return res.status(400).send(err);
       res.status(200).json({ success: true, videos });
+    });
+});
+
+//비디오 하나만 가져오기
+router.post("/getVideoDetail", (req, res) => {
+  //client에서 보낸 postid를 통해 video를 찾는다.
+  Video.findOne({ _id: req.body.videoId })
+    .populate("writer")
+    .exec((err, videoDetail) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).json({ success: true, videoDetail });
     });
 });
 
