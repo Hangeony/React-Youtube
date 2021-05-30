@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Row, Col, List, Avatar } from "antd";
 import SideVideo from "./Sections/SideVideo";
+import Subscribe from "./Sections/Subscribe";
 
 function VideoDetailPage(props) {
   // app.js에서 경로를 video/:videoId로 해둬서 params.videoId를 가져올수있다.
@@ -36,7 +37,14 @@ function VideoDetailPage(props) {
               controls
             />
 
-            <List.Item actions>
+            <List.Item
+              actions={[
+                <Subscribe
+                  userTo={VideoDetail.writer._id}
+                  userFrom={localStorage.getItem("userId")}
+                />,
+              ]}
+            >
               <List.Item.Meta
                 avatar={<Avatar src={VideoDetail.writer.image} />}
                 title={VideoDetail.writer.name}

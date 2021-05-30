@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const config = require("./config/key");
 const cookieParser = require("cookie-parser");
-const path = require('path');
+const path = require("path");
 const cors = require("cors");
 
 const app = express();
@@ -34,9 +34,10 @@ app.use(cookieParser());
 
 //모든 service의 api들을 index.js를 모두 넣어놔야하는데
 //router의 정의를 해둬서 분활 시켜두는것을 의미.
-app.use('/', express.static(path.join(__dirname, '../../uploads')))
+app.use("/", express.static(path.join(__dirname, "../../uploads")));
 // console.log(path.join(__dirname, '../../uploads'));
 app.use("/api/users", require("./routers/users"));
 app.use("/api/video", require("./routers/video"));
+app.use("/api/subscribe", require("./routers/subscribe"));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
