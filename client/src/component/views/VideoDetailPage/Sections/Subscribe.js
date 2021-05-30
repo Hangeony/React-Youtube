@@ -4,12 +4,13 @@ import axios from "axios";
 function Subscribe(props) {
   //video 업로드 한사람이 얼마나 구독자 수를 가져와야함
   //videoDetailpage에서 VideoDetail.writer._id를 props로 넣어주면 된다.
-  let variable = { userTo: props.userTo };
 
   const [SubscribeNumber, setSubscribeNumber] = useState(0);
   const [Subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
+    let variable = { userTo: props.userTo };
+
     axios.post("/api/subscribe/subscribeNumber", variable).then((response) => {
       if (response.data.success) {
         //subscribeNumber =subscribe.js에서 불러온것.

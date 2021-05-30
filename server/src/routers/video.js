@@ -5,6 +5,7 @@ const path = require("path");
 const { Video } = require("../models/Video");
 const ffmpeg = require("fluent-ffmpeg");
 const { auth } = require("../middleware/auth");
+const { Subscriber } = require("../models/Subscriber");
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -124,6 +125,31 @@ router.post("/getVideoDetail", (req, res) => {
       if (err) return res.status(400).send(err);
       return res.status(200).json({ success: true, videoDetail });
     });
+});
+
+//구독된 비디오 가져오는 코드
+router.post("/getSubscriptionVideos", (req, res) => {
+  //자신의 아이디를 가지고 구독 하는 사람들을 찾는다.
+  Subscriber.find({ userFrom: req.body.userFrom }).exec(
+    (err, subscriberInfo) => {
+      if (err) return res.status(400).send(err);
+
+      //userTo의 여러명의 정보를 얻어올때
+      let subscribedUser = [];
+
+      subscriberInfo.map((subscriber, i) => {
+        subscribedUser.push(subscriber.userTo);
+      });
+      //찾은 사람들을 비디오를 가지고 온다.
+      //여러명일때에는 req.body._id가 안된다, mongoDB에 기능을 이용하여 다수의 사람을 찾아냄
+      Video.find({ writer: { $in: subscribedUser } })
+        .populate("writer")
+        .exec((err, videos) => {
+          if (err) return res.status(400).send(err);
+          res.status(200).json({ success: true, videos });
+        });
+    }
+  );
 });
 
 module.exports = router;

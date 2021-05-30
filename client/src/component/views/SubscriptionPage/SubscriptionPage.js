@@ -2,29 +2,31 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import { Card, Avatar, Col, Typography, Row } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 const { Meta } = Card;
 
 function LandingPage() {
   const [Video, setVideo] = useState([]);
-
-  //dom이 로드 되자마자 무서을 한번할것인지 정해줌
+  //구독 한 사람들을 찾고 비디오를 찾는다.
   useEffect(() => {
-    axios.get("/api/video/getVideos").then((response) => {
-      if (response.data.success) {
-        console.log("GetVideos", response.data);
-        setVideo(response.data.videos);
-      } else {
-        alert("비디오 정보를 가져오는데 실패했습니다.");
-      }
-    });
+    const subscriptionVariables = {
+      userFrom: localStorage.getItem("userId"),
+    };
+
+    axios
+      .post("/api/video/getSubscriptionVideos", subscriptionVariables)
+      .then((response) => {
+        if (response.data.success) {
+          console.log("getSubscriptionVideos", response.data);
+          setVideo(response.data.videos);
+        } else {
+          alert("비디오 정보를 가져오는데 실패했습니다.");
+        }
+      });
   }, []);
 
   const renderCards = Video.map((video, index) => {
-    //video에서 duration을 가져와서 /60을 나누면 minutes가 되구
-    //모든  minute을  60을 곱한뒤  video duration을 빼면 초가 됨
     let minutes = Math.floor(video.duration / 60);
     let seconds = Math.floor(video.duration - minutes * 60);
 
@@ -46,7 +48,7 @@ function LandingPage() {
         </a>
         <br />
         <Meta
-          avatar={<Avatar src={video.writer.image} icon={<UserOutlined />} />}
+          avatar={<Avatar src={video.writer.image} />}
           title={video.title}
         />
         <span>{video.writer.name} </span>
@@ -59,7 +61,7 @@ function LandingPage() {
 
   return (
     <div style={{ width: "85%", margin: "3rem auto" }}>
-      <Title level={2}> Recommended </Title>
+      <Title level={2}> Subscription </Title>
       <hr />
       <Row gutter={[32, 16]}>{renderCards}</Row>
     </div>

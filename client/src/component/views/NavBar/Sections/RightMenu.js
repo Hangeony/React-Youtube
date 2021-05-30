@@ -36,7 +36,15 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="upload">
-          <a href="/video/upload">video</a>
+          <a href="/video/upload">
+            <img
+              src="https://github.com/jaewonhimnae/react-youtube-clone/blob/master/client/src/assets/images/upload.png?raw=true"
+              alt="upload"
+            />
+          </a>
+        </Menu.Item>
+        <Menu.Item key="subscription">
+          <a href="/subscription">Subscription</a>
         </Menu.Item>
         <Menu.Item key="logout">
           <a onClick={logoutHandler}>Logout</a>

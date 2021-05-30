@@ -16,7 +16,7 @@ router.post("/subscribeNumber", (req, res) => {
   });
 });
 
-//구독자 정보
+//글쓴이를 구독했는지 정보 확인
 router.post("/subscribed", (req, res) => {
   Subscriber.find({
     userTo: req.body.userTo,
@@ -33,8 +33,20 @@ router.post("/subscribed", (req, res) => {
   });
 });
 
+//구독하기
+router.post("/subscribe", (req, res) => {
+  //userTo, userFrom을 DB에 저장하기 위해 인스턴스 생성
+  //userTo, userFrom을 불러와서 저장.
+  const subscribe = new Subscriber(req.body);
+
+  subscribe.save((err, doc) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).json({ success: true });
+  });
+});
+
 //구독 취소 하기
-router.post("unSubscribe", (req, res) => {
+router.post("/unSubscribe", (req, res) => {
   //userTo, userFrom을 찾아서 없애줘야함.
   Subscriber.findOneAndDelete({
     userTo: req.body.userTo,
@@ -42,18 +54,6 @@ router.post("unSubscribe", (req, res) => {
   }).exec((err, doc) => {
     if (err) return res.status(400).json({ success: false, err });
     return res.status(200).json({ success: true, doc });
-  });
-});
-
-//구독하기
-router.post("subscribe", (req, res) => {
-  //userTo, userFrom을 DB에 저장하기 위해 인스턴스 생성
-  //userTo, userFrom을 불러와서 저장.
-  const subscribe = new Subscribe(req.body);
-
-  subscribe.Save((err, doc) => {
-    if (err) return res.status(400).json({ success: false, err });
-    return res.status(200).json({ success: true });
   });
 });
 

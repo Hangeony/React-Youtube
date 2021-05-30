@@ -39,5 +39,6 @@ app.use("/", express.static(path.join(__dirname, "../../uploads")));
 app.use("/api/users", require("./routers/users"));
 app.use("/api/video", require("./routers/video"));
 app.use("/api/subscribe", require("./routers/subscribe"));
+app.use("/api/comment", require("./routers/comment"));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
