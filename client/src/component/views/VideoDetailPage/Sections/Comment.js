@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux"; //function형이여서 redux-hook사용
 import SingleComment from "./SingleComment";
+import ReplyComment from "./ReplyComment";
 
 function Comment(props) {
   const [CommentValue, setCommentValue] = useState("");
@@ -44,12 +45,19 @@ function Comment(props) {
         props.commentList.map(
           (comment, index) =>
             !comment.responseTo && (
-              <SingleComment
-                key={comment._id}
-                refreshFunction={props.refreshFunction}
-                comment={comment}
-                postId={videoId}
-              />
+              <React.Fragment key={comment._id}>
+                <SingleComment
+                  refreshFunction={props.refreshFunction}
+                  comment={comment}
+                  postId={videoId}
+                />
+                <ReplyComment
+                  postId={videoId}
+                  refreshFunction={props.refreshFunction}
+                  parentCommentId={comment._id}
+                  commentList={props.commentList}
+                />
+              </React.Fragment>
             )
         )}
 

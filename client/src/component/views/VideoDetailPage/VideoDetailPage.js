@@ -47,6 +47,8 @@ function VideoDetailPage(props) {
         userFrom={localStorage.getItem("userId")}
       />
     );
+
+    console.log("video", Comments);
     return (
       <Row gutter={[16, 16]}>
         <Col lg={18} xs={24}>
@@ -59,7 +61,6 @@ function VideoDetailPage(props) {
               )}`}
               controls
             />
-
             <List.Item actions={[subscribeButton]}>
               <List.Item.Meta
                 avatar={

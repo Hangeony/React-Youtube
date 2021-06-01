@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import { Card, Avatar, Col, Typography, Row } from "antd";
-
+import { UserOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 const { Meta } = Card;
 
@@ -48,7 +48,7 @@ function LandingPage() {
         </a>
         <br />
         <Meta
-          avatar={<Avatar src={video.writer.image} />}
+          avatar={<Avatar src={video.writer.image} icon={<UserOutlined />} />}
           title={video.title}
         />
         <span>{video.writer.name} </span>

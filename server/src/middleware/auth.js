@@ -3,6 +3,7 @@ let auth = (req, res, next) => {
   //인증처리 하는곳
   //클라이언트에서 토큰을 가져옴.
   let token = req.cookies.x_auth;
+  console.log("token", token);
   if (!token) {
     return next();
   }
@@ -14,6 +15,7 @@ let auth = (req, res, next) => {
 
     req, (token = token);
     req.user = user;
+    console.log("reqUser", req.user);
     next();
   });
   //유저가 있으면 okay

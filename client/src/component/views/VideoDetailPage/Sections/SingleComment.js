@@ -17,7 +17,7 @@ function SingleComment(props) {
   };
 
   const onHandleChange = (event) => {
-    setCommentValue(event.currentTarget.CommentValue);
+    setCommentValue(event.currentTarget.value);
   };
 
   const actions = [
@@ -31,7 +31,6 @@ function SingleComment(props) {
 
     const variables = {
       content: CommentValue,
-      writer: user.userData._id,
       postId: props.postId,
       responseTo: props.comment._id,
     };
@@ -41,12 +40,13 @@ function SingleComment(props) {
         console.log("Comment", response.data.result);
         props.refreshFunction(response.data.result);
         setCommentValue("");
+        setOpenReply(false);
       } else {
         alert("커멘트를 저장하지 못했습니다.");
       }
     });
   };
-
+  console.log("comment", props.comment);
   return (
     <div>
       <Comment
